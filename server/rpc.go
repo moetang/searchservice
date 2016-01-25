@@ -20,9 +20,14 @@ var (
 	searchMethod api.SearchDoc = searchDocMethod
 )
 
-func StartAndListen() {
+type ServerConfig struct {
+	ListenString   string
+	DictionaryPath string
+}
+
+func StartAndListen(config *ServerConfig) {
 	searchengine.Init(types.EngineInitOptions{
-		SegmenterDictionaries: "dictionary.txt",
+		SegmenterDictionaries: config.DictionaryPath,
 	})
 
 	methods := map[string]reflect.Value{
@@ -30,7 +35,7 @@ func StartAndListen() {
 		"search": reflect.ValueOf(searchMethod),
 	}
 	serverGlobalConfig := new(server.ServiceConfig)
-	serverGlobalConfig.Listen = "tcp://127.0.0.1:14357"
+	serverGlobalConfig.Listen = config.ListenString
 	server, err := server.NewServer(make(map[string]string), methods, serverGlobalConfig)
 	if err != nil {
 		log.Fatalln(err)

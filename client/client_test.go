@@ -1,11 +1,12 @@
 package client_test
 
 import (
-	"github.com/moetang/searchservice/api"
-	"github.com/moetang/searchservice/client"
 	"log"
 	"testing"
 	"time"
+
+	"github.com/moetang/searchservice/api"
+	"github.com/moetang/searchservice/client"
 )
 
 func TestSample(t *testing.T) {
@@ -27,7 +28,7 @@ func TestSample(t *testing.T) {
 	time.Sleep(1 * time.Second)
 
 	searchReq := &api.SearchDocumentReq{
-		Keyword:"百科",
+		Keyword: "百科",
 	}
 	searchResp, err := c.SearchDoc(searchReq)
 	if err != nil {
